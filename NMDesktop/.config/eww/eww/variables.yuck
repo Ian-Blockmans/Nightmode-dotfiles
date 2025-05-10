@@ -1,0 +1,31 @@
+
+;; ***** Json ********************************************************
+;; Json array of the cava output
+(deflisten JSON_CAVA_OUTPUT :initial "[]"
+  `scripts/cava/./cava_pipe.sh`)
+
+;; Music status from mpris
+(defpoll MPRIS_STATUS :interval "2s"
+  "scripts/mpris.sh --status")
+
+(defpoll MPRIS_TITLE :interval "2s"
+  "scripts/mpris.sh --title")
+
+(defpoll MPRIS_ARTIST :interval "2s"
+  "scripts/mpris.sh --artist")
+
+(defvar MPRIS_COVER_DEFAULT "images/music.png")
+
+(deflisten MPRIS_COVER :initial "" `scripts/./mpris.sh --cover`)
+
+(deflisten MPRIS_COVER_BLUR :initial ""
+  `scripts/convert_images/./mpris_blur.sh`)
+
+(defpoll MPRIS_PLAYER_NAME :interval "2s"
+  "scripts/mpris.sh --player_name")
+
+(defpoll MPRIS_PLAYER_ICON :interval "2s"
+  "scripts/mpris.sh --player_icon")
+
+(defpoll MPRIS_PLAYER_POSITION :interval "1s"
+  "scripts/mpris.sh --position")

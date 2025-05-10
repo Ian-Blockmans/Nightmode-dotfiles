@@ -1,0 +1,132 @@
+;; ***** Variables *****
+(include "variables.yuck")
+(include "widgets/visualizer.yuck")
+
+(defwindow example
+           :monitor 1
+           :geometry (geometry :x "0px"
+                               :y "0px"
+                               :width "200px"
+                               :height "100%"
+                               :anchor "top left")
+           :stacking "fg"
+           :exclusive false
+           :focusable "ondemand"
+  (top))
+
+(defwidget top []
+  (box
+    :class "top"
+    :orientation "v"
+    :space-evenly "false"
+    (mediaplayer)
+    (visualizer)
+  )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Media Player
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar BUTTON_HEIGHT 40)
+
+(defwidget mediaplayer []
+  (box
+    :class "widgettop"
+    :orientation "v"
+    :space-evenly false
+    (label 
+      :text "░ ▒ ▓ → Media Player"
+      :class "nmtab"
+      :halign "start"
+      ;:valign "start"
+      :width 100
+    )
+    (box
+      :class "nmbox"
+      :space-evenly false
+      :orientation "h"
+      (box
+        :halign "center"
+        :valign "start"
+        :vexpand true
+        :height 200
+        :width 200
+        :style
+        "
+        background-image: url('${MPRIS_COVER}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        border-radius: 1rem;
+        "
+      )
+      (box
+        :hexpand true
+        :orientation "v"
+        :space-evenly false
+        (box
+          :class "textbox"
+          :orientation "v"
+          :space-evenly false
+          (label
+            :halign "start"
+            :class "text"
+            :text {MPRIS_TITLE}
+          )
+          (label
+            :halign "start"
+            :class "text"
+            :text {MPRIS_ARTIST}
+          )
+        )
+        (box
+          :class "mcontrol"
+          :orientation "h"
+          :halign "center"
+          :space-evenly false
+          :hexpand true
+          (button
+            :class "mbutton"
+            :onclick "playerctl -p spotify previous"
+            (image
+              :path "assets/skip-previous.svg"
+              :fill-svg "white"
+              :image-height {BUTTON_HEIGHT}
+            )
+          )
+          (button
+            :onclick "playerctl -p spotify play-pause"
+            :class "mbutton"
+            (image
+              :path "assets/play-pause.svg"
+              :fill-svg "white"
+              :image-height {BUTTON_HEIGHT}
+          )
+          )
+          (button
+            :onclick "playerctl -p spotify next"
+            :class "mbutton"
+            (image
+              :path "assets/skip-next.svg"
+              :fill-svg "white"
+              :image-height {BUTTON_HEIGHT}
+            )
+          )
+        )
+        (scale
+          :class "mppos"
+          :orientation "h"
+          :valign "end"
+          :value {MPRIS_PLAYER_POSITION}
+          :min 0
+          :max 100
+          :hight 20
+          :active true
+          :onchange "scripts/mpris.sh --seek {}"
+        )
+      )
+    )
+  )
+
+)
