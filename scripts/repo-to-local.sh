@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cp -R ~/.config/ ../NMDesktop/.config/eww
+cp -R ../NMDesktop/.config/eww ~/.config/
