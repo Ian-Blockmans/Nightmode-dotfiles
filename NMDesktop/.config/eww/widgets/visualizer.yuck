@@ -1,16 +1,12 @@
 (defwidget visualizer []
   (box
     :orientation "v"
-    :class "widgettop"
-    ;:height 200
-    :width 100
+    :class "windowtop"
     :space-evenly false
     (label 
-      :text "░ ▒ ▓ → Visualizer"
+      :text "░▒▓ → Visualizer"
       :class "nmtab"
-      :halign "start"
-      ;:valign "start"
-      :width 100
+      :xalign 0
     )
     (box
       :class "nmbox"

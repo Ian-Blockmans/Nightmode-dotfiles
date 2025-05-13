@@ -35,8 +35,25 @@ $white: $foreground;
     background-color: black;
 }
 
-.widgettop{
-    padding: 20px;
+.windowtop{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+}
+
+.windowtophalfright{
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 0px;
+    padding-right: 20px;
+}
+
+.windowtophalfleft{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 0px;
+    padding-right: 10px;
 }
 
 .nmbox{
@@ -48,15 +65,33 @@ $white: $foreground;
     background-color: black;
 }
 
+.paddedbox{
+    padding: 2px;
+}
+
 .nmtab{
     font-family: "AcPlus IBM VGA 8x16";
     font-size: 18px;
     padding-top: 10px;
     padding-bottom: 8px;
     padding-left: 48px;
-    padding-right: 300px;
+    min-width: 200px;
     background-image: url("assets/nmTab.png");
     background-size: 300px;
+    background-repeat: no-repeat;
+    background-position: 20px,0,0;
+    background-color: black;
+}
+
+.nmtabhalf{
+    font-family: "AcPlus IBM VGA 8x16";
+    font-size: 14px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+    padding-left: 44px;
+    min-width: 180px;
+    background-image: url("assets/nmTab.png");
+    background-size: 230px;
     background-repeat: no-repeat;
     background-position: 20px,0,0;
     background-color: black;
@@ -66,6 +101,26 @@ $white: $foreground;
     font-family: "AcPlus IBM VGA 8x16";
     font-size: 28px;
     padding: 2px;
+}
+
+.monitortext{
+    font-family: "AcPlus IBM VGA 8x16";
+    font-size: 22px;
+    padding: 2px;
+}
+
+.textmini{
+    font-family: "PxPlus IBM VGA 8x16";
+    font-size: 12px;
+    padding: 2px;
+    padding-left: 20;
+}
+
+.textsystem{
+    font-family: "AcPlus IBM VGA 8x16";
+    font-size: 18px;
+    padding: 2px;
+    padding-left: 20;
 }
 
 .textbox{

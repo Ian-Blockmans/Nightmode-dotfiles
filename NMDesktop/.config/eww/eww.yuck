@@ -1,6 +1,7 @@
 ;; ***** Variables *****
 (include "variables.yuck")
 (include "widgets/visualizer.yuck")
+(include "widgets/mediacontrol.yuck")
 
 (defwindow example
            :monitor 1
@@ -9,7 +10,7 @@
                                :width "200px"
                                :height "100%"
                                :anchor "top left")
-           :stacking "fg"
+           :stacking "bg"
            :exclusive false
            :focusable "ondemand"
   (top))
@@ -21,112 +22,194 @@
     :space-evenly "false"
     (mediaplayer)
     (visualizer)
+    (system-mon)
+    (fetch)
   )
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Media Player
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defvar BUTTON_HEIGHT 40)
-
-(defwidget mediaplayer []
+(defwidget fetch []
   (box
-    :class "widgettop"
+    :class "windowtop"
     :orientation "v"
     :space-evenly false
+    :width 400
     (label 
-      :text "░ ▒ ▓ → Media Player"
+      :text "░▒▓ → System Info"
       :class "nmtab"
-      :halign "start"
-      ;:valign "start"
-      :width 100
+      :xalign 0
     )
     (box
       :class "nmbox"
       :space-evenly false
-      :orientation "h"
       (box
-        :halign "center"
-        :valign "start"
-        :vexpand true
-        :height 200
-        :width 200
-        :style
-        "
-        background-image: url('${MPRIS_COVER}');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-        border-radius: 1rem;
-        "
-      )
-      (box
-        :hexpand true
-        :orientation "v"
         :space-evenly false
-        (box
-          :class "textbox"
-          :orientation "v"
-          :space-evenly false
-          (label
-            :halign "start"
-            :class "text"
-            :text {MPRIS_TITLE}
-          )
-          (label
-            :halign "start"
-            :class "text"
-            :text {MPRIS_ARTIST}
-          )
+        (label
+          :class "textmini"
+          :text
+"
+             @@@@@@@@@~             
+          @@@@@{]][[}@@@@           
+    @@@@( @@[[[}}[[[[[[}@  =@[      
+ =@@@@@@#@@@@{}}[[[}}[[[[]@@@@@@@@@   
+@@ @@@@@}}}[[[}{}}}}[}}}}}[[]]}#@@@@@@
+@@    @@@%}}}}}}[}}}}[[[[[}[#@@@@    @
+@@      @@{@@@@#}}[[}}#@@@#{@@       @
+@@       @@@  @@@@@@@@@@ @@)@(       @
+@@       =@@     @@@      @{@        @
+@@        @@              @@@        @
+@@         @.             @@]        @
+@@         @.              @         @
+@@                         @         @
+@@     @                             @
+@@     @#                      @     @
+@@     @@                      @     @
+@@     @@@             @      +@     @
+@@:    @@@             @      @@     @
+  }@@@^@@@@            @@     @@@)@@@:
+      (~  @@           @@    @@ @+    
+           @@          @@@@@@         
+             @@@@   @@@@              
+                 @@@                  
+"
         )
-        (box
-          :class "mcontrol"
-          :orientation "h"
-          :halign "center"
-          :space-evenly false
-          :hexpand true
-          (button
-            :class "mbutton"
-            :onclick "playerctl -p spotify previous"
-            (image
-              :path "assets/skip-previous.svg"
-              :fill-svg "white"
-              :image-height {BUTTON_HEIGHT}
-            )
-          )
-          (button
-            :onclick "playerctl -p spotify play-pause"
-            :class "mbutton"
-            (image
-              :path "assets/play-pause.svg"
-              :fill-svg "white"
-              :image-height {BUTTON_HEIGHT}
-          )
-          )
-          (button
-            :onclick "playerctl -p spotify next"
-            :class "mbutton"
-            (image
-              :path "assets/skip-next.svg"
-              :fill-svg "white"
-              :image-height {BUTTON_HEIGHT}
-            )
-          )
-        )
-        (scale
-          :class "mppos"
-          :orientation "h"
-          :valign "end"
-          :value {MPRIS_PLAYER_POSITION}
-          :min 0
-          :max 100
-          :hight 20
-          :active true
-          :onchange "scripts/mpris.sh --seek {}"
+        (label
+          :text {FETCH}
+          :class "textsystem"
+          :yalign 0
         )
       )
     )
   )
+)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; System
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defwidget system-mon []
+  (box
+    :orientation "h"
+    (box
+      :class "windowtop"
+      :orientation "v"
+      :space-evenly false
+      (label 
+        :text "░▒▓ → System Monitor"
+        :class "nmtabhalf"
+        :xalign 0
+      )
+      (box
+        :class "nmbox"
+        :space-evenly false
+        :orientation "v"
+        :width 200
+        (box
+          :orientation "v"
+          :class "paddedbox"
+          (box
+            :orientation "h"
+            :space-evenly false
+            (label
+              :text "CPU Temperature:"
+              :class "monitortext"
+              :xalign 0
+            )
+            (label
+              :text "${ round(EWW_TEMPS.K10TEMP_TCCD1, 0)}°C"
+              :class "monitortext"
+              :xalign 1
+              :hexpand true
+            )
+          )
+          (box
+            :orientation "h"
+            :space-evenly false
+            (label
+              :text "CPU Usage:"
+              :class "monitortext"
+              :xalign 0
+            )
+            (label
+              :text "${round(EWW_CPU.avg ,0)}%"
+              :class "monitortext"
+              :xalign 1
+              :hexpand true
+            )
+          )
+          (textvar :label "CPU Freq" :var {round(CPU_CLOCK ,0)}  :unit " Mhz")
+          (textvar :label "RAM Usage" :var {RAM_USED}  :unit " MB")
+          (textvar :label "Nvme SSD SN770" :var {round(EWW_TEMPS.NVME_SENSOR_1_WD_BLACK_SN770_1TB_TEMP2, 0)} :unit "°C") 
+          (textvar :label "Nvme SSD 960 EVO)" :var {round(EWW_TEMPS.NVME_SENSOR_2_SAMSUNG_SSD_960_EVO_250GB_TEMP3, 0)} :unit "°C") 
+          (textvar :label "HDD 1" :var {HDD_TEMP_1} :unit "")
+          (textvar :label "HDD 2" :var {HDD_TEMP_2} :unit "")
+        )
+      )
+    )
+    (box
+      :class "windowtophalfright"
+      :orientation "v"
+      :space-evenly false
+      (label 
+        :text "░▒▓ → Graphics"
+        :class "nmtabhalf"
+        :xalign 0
+        ;:valign "start"
+      )
+      (box
+        :class "nmbox"
+        :space-evenly false
+        :orientation "v"
+        :width 200
+        (box
+          :class "paddedbox"
+          :orientation "v"
+          (textvar :label "Temprature" :var {GPU_TEMP} :unit "°C")
+          (textvar :label "Graphics Usage" :var {GPU_USAGE} :unit "%")
+          (textvar :label "Graphics Freq" :var {GPU_GRAPHICS_CLOCK} :unit " Mhz")
+          (textvar :label "Memory Total" :var {GPU_MEMORY_TOTAL} :unit " MB")
+          (textvar :label "Memory Used" :var {GPU_MEMORY_USED} :unit " MB")
+          (textvar :label "Memory Freq" :var {GPU_MEMORY_CLOCK} :unit " Mhz")
+          (textvar :label "GPU Power" :var {GPU_POWER} :unit " W")
+          (textvar :label "Driver Version" :var {GPU_DRIVER} :unit " V")
+        )
+      )
+    )
+  )
+)
+
+(defwidget textvar [label var unit]
+  (box
+    :orientation "h"
+    :space-evenly false
+    (label
+      :text "${label}:"
+      :class "monitortext"
+      :xalign 0
+    )
+    (label
+      :text "${var}${unit}"
+      :class "monitortext"
+      :xalign 1
+      :hexpand true
+    )
+  )
+)
+
+(defwidget cpucorefreq [core]
+  (box
+    :orientation "h"
+    :space-evenly false
+    (label
+      :text "Core${core}:"
+      :class "monitortext"
+      :xalign 0
+    )
+    (label
+      :text "${ EWW_CPU.cores[core].freq} Mhz"
+      :class "monitortext"
+      :xalign 1
+      :hexpand true
+    )
+  )
 )

@@ -1,0 +1,103 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Media Player
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar BUTTON_HEIGHT 40)
+
+(defwidget mediaplayer []
+  (box
+    :class "windowtop"
+    :orientation "v"
+    :space-evenly false
+    (label 
+      :text "░▒▓ → Media Control"
+      :class "nmtab"
+      :xalign 0
+    )
+    (box
+      :class "nmbox"
+      :space-evenly false
+      :orientation "h"
+      (box
+        :halign "center"
+        :valign "start"
+        :vexpand true
+        :height 200
+        :width 200
+        :style
+        "
+        background-image: url('${MPRIS_COVER}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        border-radius: 1rem;
+        "
+      )
+      (box
+        :hexpand true
+        :orientation "v"
+        :space-evenly false
+        (box
+          :class "textbox"
+          :orientation "v"
+          :space-evenly false
+          (label
+            :halign "start"
+            :class "text"
+            :text {MPRIS_TITLE}
+          )
+          (label
+            :halign "start"
+            :class "text"
+            :text {MPRIS_ARTIST}
+          )
+        )
+        (box
+          :class "mcontrol"
+          :orientation "h"
+          :halign "center"
+          :space-evenly false
+          :hexpand true
+          (button
+            :class "mbutton"
+            :onclick "playerctl -p spotify previous"
+            (image
+              :path "assets/skip-previous.svg"
+              :fill-svg "white"
+              :image-height {BUTTON_HEIGHT}
+            )
+          )
+          (button
+            :onclick "playerctl -p spotify play-pause"
+            :class "mbutton"
+            (image
+              :path "assets/play-pause.svg"
+              :fill-svg "white"
+              :image-height {BUTTON_HEIGHT}
+          )
+          )
+          (button
+            :onclick "playerctl -p spotify next"
+            :class "mbutton"
+            (image
+              :path "assets/skip-next.svg"
+              :fill-svg "white"
+              :image-height {BUTTON_HEIGHT}
+            )
+          )
+        )
+        (scale
+          :class "mppos"
+          :orientation "h"
+          :valign "end"
+          :value {MPRIS_PLAYER_POSITION}
+          :min 0
+          :max 100
+          :hight 20
+          :active true
+          :onchange "scripts/mpris.sh --seek {}"
+        )
+      )
+    )
+  )
+)
