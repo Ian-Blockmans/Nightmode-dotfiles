@@ -1,0 +1,101 @@
+(defwidget visualizer []
+  (box
+    :orientation "v"
+    :class "windowtop"
+    :space-evenly false
+    :hexpand true
+    (label 
+      :text "░▒▓ → Visualizer"
+      :class "nmtab"
+      :xalign 0
+    )
+    (box
+      :class "nmbox"
+      :orientation "h"
+      :halign "start"
+      :height "200"
+      :hexpand true
+      (box
+          :class "bars"
+          :halign "start"
+          :valign "fill"
+          ;:spacing 25
+
+          (rice_changer_audio_visualizer :index 0 :flipped true)
+          (rice_changer_audio_visualizer :index 1 :flipped true)
+          (rice_changer_audio_visualizer :index 2 :flipped true)
+          (rice_changer_audio_visualizer :index 3 :flipped true)
+          (rice_changer_audio_visualizer :index 4 :flipped true)
+          (rice_changer_audio_visualizer :index 5 :flipped true)
+          (rice_changer_audio_visualizer :index 6 :flipped true)
+          (rice_changer_audio_visualizer :index 7 :flipped true)
+          (rice_changer_audio_visualizer :index 8 :flipped true)
+          (rice_changer_audio_visualizer :index 9 :flipped true)
+          (rice_changer_audio_visualizer :index 10 :flipped true)
+          (rice_changer_audio_visualizer :index 11 :flipped true)
+          (rice_changer_audio_visualizer :index 12 :flipped true)
+          (rice_changer_audio_visualizer :index 13 :flipped true)
+          (rice_changer_audio_visualizer :index 14 :flipped true)
+          (rice_changer_audio_visualizer :index 15 :flipped true)
+          (rice_changer_audio_visualizer :index 16 :flipped true)
+          (rice_changer_audio_visualizer :index 17 :flipped true)
+          (rice_changer_audio_visualizer :index 18 :flipped true)
+          (rice_changer_audio_visualizer :index 19 :flipped true)
+          (rice_changer_audio_visualizer :index 20 :flipped true)
+          (rice_changer_audio_visualizer :index 21 :flipped true)
+          (rice_changer_audio_visualizer :index 22 :flipped true)
+          (rice_changer_audio_visualizer :index 23 :flipped true)
+          (rice_changer_audio_visualizer :index 24 :flipped true)
+          (rice_changer_audio_visualizer :index 25 :flipped true)
+          (rice_changer_audio_visualizer :index 26 :flipped true)
+          (rice_changer_audio_visualizer :index 27 :flipped true)
+          (rice_changer_audio_visualizer :index 28 :flipped true)
+          (rice_changer_audio_visualizer :index 29 :flipped true)
+          (rice_changer_audio_visualizer :index 30 :flipped true)
+          (rice_changer_audio_visualizer :index 31 :flipped true)
+          (rice_changer_audio_visualizer :index 32 :flipped true)
+          (rice_changer_audio_visualizer :index 33 :flipped true)
+          (rice_changer_audio_visualizer :index 34 :flipped true)
+          (rice_changer_audio_visualizer :index 35 :flipped true)
+          (rice_changer_audio_visualizer :index 36 :flipped true)
+          (rice_changer_audio_visualizer :index 37 :flipped true)
+          (rice_changer_audio_visualizer :index 38 :flipped true)
+          (rice_changer_audio_visualizer :index 39 :flipped true)
+          (rice_changer_audio_visualizer :index 40 :flipped true)
+          (rice_changer_audio_visualizer :index 41 :flipped true)
+          (rice_changer_audio_visualizer :index 42 :flipped true)
+          (rice_changer_audio_visualizer :index 43 :flipped true)
+          (rice_changer_audio_visualizer :index 44 :flipped true)
+          (rice_changer_audio_visualizer :index 45 :flipped true)
+          (rice_changer_audio_visualizer :index 46 :flipped true)
+          (rice_changer_audio_visualizer :index 47 :flipped true)
+          (rice_changer_audio_visualizer :index 48 :flipped true)
+          (rice_changer_audio_visualizer :index 49 :flipped true)
+          (rice_changer_audio_visualizer :index 50 :flipped true)
+          (rice_changer_audio_visualizer :index 51 :flipped true)
+          (rice_changer_audio_visualizer :index 52 :flipped true)
+          (rice_changer_audio_visualizer :index 53 :flipped true)
+          (rice_changer_audio_visualizer :index 54 :flipped true)
+          (rice_changer_audio_visualizer :index 55 :flipped true)
+          (rice_changer_audio_visualizer :index 56 :flipped true)
+          (rice_changer_audio_visualizer :index 57 :flipped true)
+          (rice_changer_audio_visualizer :index 58 :flipped true)
+          (rice_changer_audio_visualizer :index 59 :flipped true)
+      )
+    )
+  )
+)
+
+(defwidget rice_changer_audio_visualizer [index flipped]
+  (box
+    (scale
+      :class "wave"
+      :orientation "v"
+      :flipped "${flipped}"
+      :value {JSON_CAVA_OUTPUT[index]}
+      :min 0
+      :max 255
+      :active false
+    )
+  )
+)

@@ -1,0 +1,90 @@
+
+;; ***** Json ********************************************************
+;; Json array of the cava output
+(deflisten JSON_CAVA_OUTPUT :initial "[]"
+  `scripts/cava/./cava_pipe.sh`)
+
+
+;; ***** Music status from mpris ********************************************************
+(defpoll MPRIS_STATUS :interval "2s"
+  "scripts/mpris.sh --status")
+
+(defpoll MPRIS_TITLE :interval "2s"
+  "scripts/mpris.sh --title")
+
+(defpoll MPRIS_ARTIST :interval "2s"
+  "scripts/mpris.sh --artist")
+
+(defvar MPRIS_COVER_DEFAULT "images/music.png")
+
+(deflisten MPRIS_COVER :initial "" `scripts/./mpris.sh --cover`)
+
+(deflisten MPRIS_COVER_BLUR :initial ""
+  `scripts/convert_images/./mpris_blur.sh`)
+
+(defpoll MPRIS_PLAYER_NAME :interval "2s"
+  "scripts/mpris.sh --player_name")
+
+(defpoll MPRIS_PLAYER_ICON :interval "2s"
+  "scripts/mpris.sh --player_icon")
+
+(defpoll MPRIS_PLAYER_POSITION :interval "1s"
+  "scripts/mpris.sh --position")
+
+
+;; ***** system info ********************************************************
+
+(defpoll GPU_TEMP :interval "5s"
+  "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits")
+
+(defpoll GPU_USAGE :interval "5s"
+  "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits")
+
+(defpoll GPU_MEMORY_TOTAL :interval "5s"
+  "nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits")
+
+(defpoll GPU_MEMORY_USED :interval "5s"
+  "nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits")
+
+;(defpoll GPU_MEMORY_TEMP :interval "1s"
+;  "nvidia-smi --query-gpu=temperature.memory --format=csv,noheader,nounits")
+
+(defpoll GPU_MEMORY_CLOCK :interval "5s"
+  "nvidia-smi --query-gpu=clocks.current.memory --format=csv,noheader,nounits")
+
+(defpoll GPU_GRAPHICS_CLOCK :interval "5s"
+  "nvidia-smi --query-gpu=clocks.current.graphics --format=csv,noheader,nounits")
+
+(defpoll GPU_POWER :interval "5s"
+  "nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits")
+
+(defpoll GPU_DRIVER :interval "5s"
+  "nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits")
+
+;clocks.current.memory
+;clocks.current.graphics
+;module.power.draw.average
+;power.draw.average
+;power.draw
+;temperature.memory
+;utilization.gpu
+;utilization.memory
+;memory.used
+;memory.total
+;driver_version
+
+(defpoll CPU_CLOCK :interval "5s"
+  "scripts/system.sh --cpu-freq")
+
+(defpoll RAM_USED :interval "5s"
+  "free --mega | grep Mem | awk '{print $3}'")
+
+(defpoll HDD_TEMP_1 :interval "5s"
+  "hddtemp /dev/sdb | awk '{print $4}'")
+
+(defpoll HDD_TEMP_2 :interval "5s"
+  "hddtemp /dev/sdc | awk '{print $4}'")
+
+;; ***** terminal tools ********************************************************
+(defpoll FETCH :interval "60s"
+  "fastfetch -c ~/.config/eww/fastfetch/config.jsonc")
