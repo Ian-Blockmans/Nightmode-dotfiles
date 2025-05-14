@@ -1,0 +1,6 @@
+[Unit]
+Description=eww widgets
+
+[Service]
+ExecStart=eww daemon && eww open nmdesktop
+ExecStop=killall eww
