@@ -1,2 +1,2 @@
 # dotfiles
-linux rice dot files
+linux rice dotfiles (WIP)
