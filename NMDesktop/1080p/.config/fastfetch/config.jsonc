@@ -35,7 +35,10 @@
       "format": "{1} {2}"
     },
     "localip",
-    "battery",
+    {
+      "type": "battery",
+      "format": "{4} ({12} H {13} m remaining)"
+    },
     "locale",
     "break",
     "break",
