@@ -15,5 +15,7 @@ Dotfiles for my NIGHTMODE season 2 inspired linux rice.
 
 6. restart hyprland and pray.
 
+7. customize to your hardware because some things are defined for my laptop.
+
 # Image
 ![iamge](img/desktop1.png)
