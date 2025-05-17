@@ -7,7 +7,7 @@ Dotfiles for my NIGHTMODE season 2 inspired linux rice.
 
 2. Then install hyprland follow the documentation on their website or some other guide there are plenty to chose from.
 
-3. Install waybar and eww i recomend using aur for this. Or you can go to their github pages and follow their instructions for installing.
+3. Install waybar, eww and fastfetch i recomend using aur or pacman if available for this. Or you can go to their github pages and follow their instructions for installing.
 
 4. copy the files from NMDesktop/1080p/.config to ~/.config (1440p is wip but functional)
 
